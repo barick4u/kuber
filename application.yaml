@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: lms-app
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: dev
+    server: 'https://kubernetes.default.svc'
+  source:
+    repoURL: 'https://github.com/barick4u/kuber.git'
+    targetRevision: main   # <--- not HEAD
+    path: .               # <--- adjust if manifests are in subfolder
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
